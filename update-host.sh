@@ -6,6 +6,13 @@
 
 filename=$1
 while read -r line; do
-    ip=$(dig +short $line | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | head -n 1)
-    echo "$ip $hostname" >> /etc/hosts
+  dig +short $line | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | while read -r ip; do
+    entry="$ip $line"
+    echo $entry
+    # add the entry to host file, if it does not already exist
+    grep -q "$entry" /etc/hosts
+    if [ $? -ne 0 ]; then
+      echo $entry >>/etc/hosts
+    fi
+  done
 done <$filename
