@@ -1,6 +1,15 @@
 # Update-Host
 
+## Description
+
+This is a simple script to update the hosts file on Linux systems.
+It accepts a file with a list of URLS and updates the hosts file with the IP addresses of the URLS.
+
+## Usage
+
 ```sh
+
+sudo ./update-host.sh input.dat
 
 ```
 
